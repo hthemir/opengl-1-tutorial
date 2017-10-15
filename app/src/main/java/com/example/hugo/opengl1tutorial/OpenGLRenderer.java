@@ -13,10 +13,14 @@ import javax.microedition.khronos.opengles.GL10;
 public class OpenGLRenderer implements GLSurfaceView.Renderer {
 
     private Square mSquare;
+    private FlatColoredSquare mFlatColoredSquare;
+    private SmoothColoredSquare mSmoothColoredSquare;
     private float mAngle;
 
     public OpenGLRenderer() {
         mSquare = new Square();
+        mFlatColoredSquare = new FlatColoredSquare();
+        mSmoothColoredSquare = new SmoothColoredSquare();
         mAngle = 0f;
     }
 
@@ -63,7 +67,7 @@ public class OpenGLRenderer implements GLSurfaceView.Renderer {
         //substitui a matriz atual pela matriz identidade
         gl.glLoadIdentity();
         //muda de posicao em 4 unidades pra dentro da tela
-        gl.glTranslatef(0,0,-20);
+        gl.glTranslatef(0,0,-10);
 
         //quadrado A, rotacionado sentido anti horario
         //salva a matriz atual
@@ -84,7 +88,7 @@ public class OpenGLRenderer implements GLSurfaceView.Renderer {
         gl.glTranslatef(2,0,0);
         //escala pra 50% de A
         gl.glScalef(.5f, .5f, .5f);
-        mSquare.draw(gl);
+        mFlatColoredSquare.draw(gl);
 
         //quadrado C, 50% menor que B, rotaciona em sentido horario em volta de B e em sentido anti horario em relacao ao seu centro
         //salva a matriz atual
@@ -96,7 +100,7 @@ public class OpenGLRenderer implements GLSurfaceView.Renderer {
         gl.glScalef(.5f, .5f, .5f);
         //rotaciona ao redor de seu centro
         gl.glRotatef(mAngle*10, 0, 0, 1);
-        mSquare.draw(gl);
+        mSmoothColoredSquare.draw(gl);
 
         //restaura para a matriz antes de C
         gl.glPopMatrix();

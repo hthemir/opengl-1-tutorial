@@ -11,8 +11,7 @@ import javax.microedition.khronos.opengles.GL10;
  * Created by Hugo on 15/10/2017.
  */
 
-public class Square {
-    //vertices
+public class FlatColoredSquare {//vertices
     private float[] vertices = {
             -1f, 1f, 0f,  //esquerda cima
             -1f, -1f, 0f, //esquerda baixo
@@ -27,7 +26,7 @@ public class Square {
     //buffer de indice
     private ShortBuffer indexBuffer;
 
-    public Square() {
+    public FlatColoredSquare() {
         //alocar 4 bytes por vertice
         ByteBuffer vByteBuffer = ByteBuffer.allocateDirect(vertices.length * 4);
         vByteBuffer.order(ByteOrder.nativeOrder());
@@ -43,7 +42,7 @@ public class Square {
     }
 
     public void draw(GL10 gl) {
-        gl.glColor4f(1f,1f,0f,1f);
+        gl.glColor4f(.5f, .5f,1f,1f);
         //ordem anti horaria
         gl.glFrontFace(GL10.GL_CCW);
         //habilita cull face
@@ -62,3 +61,4 @@ public class Square {
         gl.glDisable(GL10.GL_CULL_FACE);
     }
 }
+
