@@ -13,9 +13,11 @@ import javax.microedition.khronos.opengles.GL10;
 public class OpenGLRenderer implements GLSurfaceView.Renderer {
 
     private Square mSquare;
+    private float mAngle;
 
     public OpenGLRenderer() {
         mSquare = new Square();
+        mAngle = 0f;
     }
 
     //chamado quando a superficie eh criada ou recriada
@@ -58,8 +60,50 @@ public class OpenGLRenderer implements GLSurfaceView.Renderer {
         //limpa a tela e buffer de profundidade
         gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
 
+        //substitui a matriz atual pela matriz identidade
         gl.glLoadIdentity();
-        gl.glTranslatef(0,0,-4);
+        //muda de posicao em 4 unidades pra dentro da tela
+        gl.glTranslatef(0,0,-20);
+
+        //quadrado A, rotacionado sentido anti horario
+        //salva a matriz atual
+        gl.glPushMatrix();
+        //rotaciona A em sentido anti horario
+        gl.glRotatef(mAngle, 0, 0, 1);
+        //desenha A
         mSquare.draw(gl);
+        //restaura a ultima matriz
+        gl.glPopMatrix();
+
+        //quadrado B, 50% menor que A e rotacionado sentido horario
+        //salva a matriz atual
+        gl.glPushMatrix();
+        //rotaciona antes de mover, fazendo rotacionar em volta de A
+        gl.glRotatef(-mAngle,0, 0, 1);
+        //move B
+        gl.glTranslatef(2,0,0);
+        //escala pra 50% de A
+        gl.glScalef(.5f, .5f, .5f);
+        mSquare.draw(gl);
+
+        //quadrado C, 50% menor que B, rotaciona em sentido horario em volta de B e em sentido anti horario em relacao ao seu centro
+        //salva a matriz atual
+        gl.glPushMatrix();
+        //faz a rotacao em volta de B
+        gl.glRotatef(-mAngle, 0,0,1);
+        gl.glTranslatef(2,0,0);
+        //escala pra 50% de B
+        gl.glScalef(.5f, .5f, .5f);
+        //rotaciona ao redor de seu centro
+        gl.glRotatef(mAngle*10, 0, 0, 1);
+        mSquare.draw(gl);
+
+        //restaura para a matriz antes de C
+        gl.glPopMatrix();
+        //restaura para a matriz antes de B
+        gl.glPopMatrix();
+
+        //aumenta o angulo
+        mAngle++;
     }
 }
