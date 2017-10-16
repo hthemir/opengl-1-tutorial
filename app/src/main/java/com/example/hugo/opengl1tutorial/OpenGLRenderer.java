@@ -7,6 +7,7 @@ import com.example.hugo.opengl1tutorial.mesh.Cube;
 import com.example.hugo.opengl1tutorial.mesh.Group;
 import com.example.hugo.opengl1tutorial.mesh.Mesh;
 import com.example.hugo.opengl1tutorial.mesh.Plane;
+import com.example.hugo.opengl1tutorial.mesh.SimplePlane;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -16,17 +17,11 @@ import javax.microedition.khronos.opengles.GL10;
  */
 
 public class OpenGLRenderer implements GLSurfaceView.Renderer {
-    private Mesh mRoot;
-    private Group mGroup;
-    private Cube mCube;
+    private final Group mRoot;
 
     public OpenGLRenderer() {
-        mGroup = new Group();
-        mCube = new Cube(1, 1, 1);
-        mCube.rx = 45;
-        mCube.ry = 45;
-        mGroup.add(mCube);
-        mRoot = mGroup;
+        Group group = new Group();
+        mRoot = group;
     }
 
     //chamado quando a superficie eh criada ou recriada
@@ -75,5 +70,9 @@ public class OpenGLRenderer implements GLSurfaceView.Renderer {
         gl.glTranslatef(0, 0, -10);
 
         mRoot.draw(gl);
+    }
+
+    public void addMesh(Mesh mesh) {
+        mRoot.add(mesh);
     }
 }
